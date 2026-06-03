@@ -1,7 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
-class LoginPage extends BasePage{
+export class LoginPage extends BasePage{
 
     //readonly used for constants restrict the modification of the locators
     //private restrict accessibility outside class
