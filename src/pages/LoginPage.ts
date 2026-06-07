@@ -20,7 +20,7 @@ export class LoginPage extends BasePage{
         this.emailID = page.getByRole('textbox',{name: 'E-Mail Address'});
         this.password = page.getByRole('textbox',{name: 'Password'});
         this.loginBtn = page.getByRole('button',{name: 'Login'});
-        this.forgottenPasswordLink = page.getByRole('link',{name: 'Fogotten Password'}).first();
+        this.forgottenPasswordLink = page.getByRole('link',{name: 'Forgotten Password'}).first();
         this.logo = page.getByAltText('naveenopencart');
     }
 
