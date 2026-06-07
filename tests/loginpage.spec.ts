@@ -1,26 +1,31 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../src/pages/LoginPage';
-test('Login Page title test', async ({ page }) => {
-    let loginPage = new LoginPage(page);
-    await loginPage.goToLoginPage();
+import { beforeEach } from 'node:test';
+import { HomePage } from '../src/pages/HomePage';
 
-    let loginPageTitle = await loginPage.getLoginPageTitle();
+let loginPage: LoginPage;
+let homePage: HomePage;
+
+test.beforeEach(async({page})=>{
+    loginPage = new LoginPage(page);
+    await loginPage.goToLoginPage();
+    homePage = new HomePage(page);
+});
+
+
+test('Login Page title test', async ( ) => {
+     let loginPageTitle = await loginPage.getLoginPageTitle();
     expect(loginPageTitle).toBe('Account Login');
-   // loginPage.doLogin('pwbatchtest@open.com', 'pw123');
+
 });
 
 
-test('Login Page Forgotten Password Link test', async ({ page }) => {
-    let loginPage = new LoginPage(page);
-    await loginPage.goToLoginPage();
 
+test('Login Page Forgotten Password Link test', async () => { 
     expect(await loginPage.isForgotPwdLinkExist()).toBeTruthy();
-   // loginPage.doLogin('pwbatchtest@open.com', 'pw123');
 });
 
-test('Login Test Nominal', async({page})=>{
-let loginPage = new LoginPage(page);
-    await loginPage.goToLoginPage();
+test('Login Test Nominal', async()=>{
     await loginPage.doLogin('pwbatchtest@open.com', 'pw123');
-
-})
+    expect(await homePage.getHomePageTitle()).toBe('My Accountt');
+});
