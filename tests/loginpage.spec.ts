@@ -29,3 +29,14 @@ test('Login Test Nominal', async()=>{
     await loginPage.doLogin('pwbatchtest@open.com', 'pw123');
     expect(await homePage.getHomePageTitle()).toBe('My Accountt');
 });
+
+/**
+ * 
+ * page, expect are inbuilt fixtures
+ * In below test method we passed page in the async but not expect
+ * test('',async({page})=>{
+ * expect().toBe();
+ * })
+ * 
+ * expect is not a fixture, is is a globally imported assertion library
+ */
