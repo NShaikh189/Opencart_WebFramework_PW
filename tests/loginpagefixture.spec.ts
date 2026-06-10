@@ -1,5 +1,6 @@
 import { test, expect } from '../src/fixtures/pagefixtures';
 import { beforeEach } from 'node:test';
+import { CsvHelper } from '../src/utils/csvHelper';
 //import {test} from '../src/fixtures/pf';
 
 //test.beforeEach(async({lPage, homePage})=>{
@@ -7,7 +8,7 @@ import { beforeEach } from 'node:test';
 // });
 
 
-test.beforeEach(async({loginPage, homePage})=>{
+test.beforeEach(async({loginPage})=>{
     await loginPage.goToLoginPage();
 });
 
@@ -40,3 +41,26 @@ test('Login Test Nominal', async({loginPage, homePage})=>{
  * 
  * expect is not a fixture, is is a globally imported assertion library
  */
+
+
+//data driven approach 1
+test('Invalid Login Test with Fixture', async({loginPage, testData})=>{
+    
+    for(let row of testData)
+    {
+        loginPage.doLogin(row.username , row.password);
+        expect(await loginPage.isInvalidLoginErrorDisplayed()).toBeTruthy();
+    }
+});
+
+
+//data driver approach 2: without fixtures
+let testData = CsvHelper.readCSV('src/data/logindata.csv');
+
+  for(let row of testData)
+    {
+        test(`Invalid login Test - ${row.username} and ${row.password}`, async({loginPage})=>{
+        loginPage.doLogin(row.username , row.password);
+        expect(await loginPage.isInvalidLoginErrorDisplayed()).toBeTruthy();
+        });
+}
