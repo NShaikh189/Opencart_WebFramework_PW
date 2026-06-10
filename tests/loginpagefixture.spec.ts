@@ -1,5 +1,11 @@
 import { test, expect } from '../src/fixtures/pagefixtures';
 import { beforeEach } from 'node:test';
+//import {test} from '../src/fixtures/pf';
+
+//test.beforeEach(async({lPage, homePage})=>{
+//     await loginPage.goToLoginPage();
+// });
+
 
 test.beforeEach(async({loginPage, homePage})=>{
     await loginPage.goToLoginPage();
@@ -19,8 +25,9 @@ test('Login Page Forgotten Password Link test', async ({loginPage}) => {
 });
 
 test('Login Test Nominal', async({loginPage, homePage})=>{
-    await loginPage.doLogin('pwbatchtest@open.com', 'pw123');
-    expect(await homePage.getHomePageTitle()).toBe('My Account');
+   // await loginPage.doLogin('pwbatchtest@open.com', 'pw123');
+   await loginPage.doLogin(process.env.USERNAME!, process.env.PASSWORD!); 
+   expect(await homePage.getHomePageTitle()).toBe('My Account');
 });
 
 /**
