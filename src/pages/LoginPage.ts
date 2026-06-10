@@ -12,6 +12,7 @@ export class LoginPage extends BasePage{
     private readonly loginBtn: Locator;
     private readonly forgottenPasswordLink: Locator;
     private readonly logo:Locator;
+    private readonly loginErrorMsg:Locator;
 
 
     //initialize the locators
@@ -22,6 +23,7 @@ export class LoginPage extends BasePage{
         this.loginBtn = page.getByRole('button',{name: 'Login'});
         this.forgottenPasswordLink = page.getByRole('link',{name: 'Forgotten Password'}).first();
         this.logo = page.getByAltText('naveenopencart');
+        this.loginErrorMsg = page.locator('.alert.alert-danger.alert-dismissible');
     }
 
 
@@ -47,5 +49,11 @@ export class LoginPage extends BasePage{
         await this.emailID.fill(username);
         await this.password.fill(password);
         await this.loginBtn.click();
+    }
+
+    async isInvalidLoginErrorDisplayed():Promise<boolean>
+    {
+         await this.loginErrorMsg.waitFor({ state: 'visible', timeout: 2000 });
+        return await this.loginErrorMsg.isVisible();
     }
 }
